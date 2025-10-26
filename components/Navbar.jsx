@@ -2,11 +2,14 @@
 import React, { useState } from 'react';
 import { Home, User, Briefcase, Award, Menu, X, Download, Book } from 'lucide-react';
 import Link from "next/link";
-import {ModeToggle} from "./ModeToggle";
+// FIX: Updated path to resolve import error. Assuming standard components directory structure.
+import {ModeToggle} from "../components/ModeToggle";
 
 /**
  * Navbar Component for the Next.js Portfolio.
- * Implements a modern, black-and-white schema with custom off-white (#EAE4D5) and deep-black (#121212) colors.
+ * Implements a contrasting scheme for better separation from dark page content:
+ * Background: #B6B09F (Light Beige/Grey)
+ * Text/Icon Color: #121212 (Deep Black)
  */
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,23 +23,30 @@ const Navbar = () => {
     {name: 'Blogs', href: '/blogs', icon: Book},
   ];
 
-  // External action links (Mail, LinkedIn, Resume Download)
+  // External action links (Resume Download)
   const externalActions = [
     // Use the Download icon for the resume button
     { name: 'Resume (PDF)', href: 'Manpreet Singh Resume.pdf', icon: Download, type: 'button', download: true },
   ];
 
-  // Common styles for navigation links - uses your custom off-white color
-  const linkClasses = "inline-flex items-center px-3 py-2 text-[#eae4d5] hover:text-[#121212] hover:bg-[#eae4d5] rounded-lg transition duration-150 ease-in-out";
+  // Define colors for easy reference
+  const BG_COLOR = 'bg-[#B6B09F]';
+  const TEXT_COLOR = 'text-[#121212]';
+  const HOVER_BG_COLOR = 'bg-[#121212]';
+  const HOVER_TEXT_COLOR = 'text-[#eae4d5]';
+
+  // Updated link styles: default text is dark, hover background is dark, and hover text is light.
+  const linkClasses = `inline-flex items-center px-3 py-2 ${TEXT_COLOR} hover:${HOVER_TEXT_COLOR} hover:${HOVER_BG_COLOR} rounded-lg transition duration-150 ease-in-out`;
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#121212] border-b border-gray-700 shadow-lg w-full font-inter">
+    // Updated background and border color
+    <nav className={`sticky top-0 z-50 ${BG_COLOR} border-b border-gray-400 shadow-lg w-full font-inter`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
 
-          {/* Logo/Name - Uses the custom off-white text color */}
+          {/* Logo/Name - Uses the dark text color */}
           <div className="flex-shrink-0">
-            <a href="/" className="text-xl font-bold text-[#eae4d5] tracking-widest uppercase">
+            <a href="/" className={`text-xl font-bold ${TEXT_COLOR} tracking-widest uppercase`}>
               M. SINGH
             </a>
           </div>
@@ -63,8 +73,10 @@ const Navbar = () => {
                 className={`
                   inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg shadow-md transition duration-200 ease-in-out
                   ${action.name === 'Resume (PDF)'
-                    ? 'bg-[#eae4d5] text-[#121212] hover:bg-gray-300 border border-[#eae4d5]' // Resume CTA is prominent (off-white button)
-                    : 'border border-gray-600 text-[#eae4d5] hover:bg-gray-700' // Other links are subtle (ghost button)
+                    // Resume CTA is prominent (dark button on light background)
+                    ? `${HOVER_BG_COLOR} ${HOVER_TEXT_COLOR} hover:bg-gray-700 border border-[#121212]` 
+                    // Other links are subtle (ghost button - uses dark text and light hover)
+                    : `border border-gray-700 ${TEXT_COLOR} hover:bg-gray-300` 
                   }
                 `}
               >
@@ -72,6 +84,7 @@ const Navbar = () => {
                 {action.name}
               </a>
             ))}
+            {/* ModeToggle - Styled separately, but positioned here */}
             <ModeToggle />
           </div>
 
@@ -79,7 +92,8 @@ const Navbar = () => {
           <div className="lg:hidden">
             <button
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-lg text-[#eae4d5] hover:text-[#121212] hover:bg-[#eae4d5] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#eae4d5]"
+              // Updated text and hover colors for button contrast
+              className={`inline-flex items-center justify-center p-2 rounded-lg ${TEXT_COLOR} hover:${HOVER_TEXT_COLOR} hover:${HOVER_BG_COLOR} focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#121212]`}
               aria-controls="mobile-menu"
               aria-expanded={isOpen}
               onClick={() => setIsOpen(!isOpen)}
@@ -97,7 +111,8 @@ const Navbar = () => {
 
       {/* Mobile Menu Content (Conditionally rendered) */}
       {isOpen && (
-        <div className="lg:hidden border-t border-gray-700" id="mobile-menu">
+        // Updated border and link colors
+        <div className="lg:hidden border-t border-gray-400" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {[...navItems, ...externalActions].map((item) => (
               <a
@@ -107,7 +122,8 @@ const Navbar = () => {
                 target={item.type === 'link' ? "_blank" : "_self"}
                 rel={item.type === 'link' ? "noopener noreferrer" : undefined}
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 text-base font-medium text-[#eae4d5] hover:bg-gray-700 hover:text-white rounded-lg transition duration-150 ease-in-out"
+                // Mobile menu links are dark on light hover
+                className={`block px-3 py-2 text-base font-medium ${TEXT_COLOR} hover:bg-gray-300 rounded-lg transition duration-150 ease-in-out`}
               >
                 <item.icon className="h-5 w-5 mr-2 inline-block" aria-hidden="true" />
                 {item.name}
