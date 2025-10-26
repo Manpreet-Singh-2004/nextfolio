@@ -1,6 +1,8 @@
 "use client"
 import React, { useState } from 'react';
-import { Home, User, Briefcase, Award, Menu, X, Download } from 'lucide-react';
+import { Home, User, Briefcase, Award, Menu, X, Download, Book } from 'lucide-react';
+import Link from "next/link";
+import {ModeToggle} from "./ModeToggle";
 
 /**
  * Navbar Component for the Next.js Portfolio.
@@ -15,6 +17,7 @@ const Navbar = () => {
     { name: 'About/Experience', href: '/#about', icon: User },
     { name: 'Projects', href: '/projects', icon: Briefcase },
     { name: 'Volunteer', href: '/volunteer', icon: Award },
+    {name: 'Blogs', href: '/blogs', icon: Book},
   ];
 
   // External action links (Mail, LinkedIn, Resume Download)
@@ -69,6 +72,7 @@ const Navbar = () => {
                 {action.name}
               </a>
             ))}
+            <ModeToggle />
           </div>
 
           {/* Mobile Menu Button (Hamburger) */}

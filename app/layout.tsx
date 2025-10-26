@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import { LoadingWrapper } from "@/components/Loading";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
 
 const geistSans = Geist({
@@ -32,9 +33,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <LoadingWrapper>
-        <Navbar />
-        {children}
-        <Footer />
+          <ThemeProvider>
+          <Navbar />
+            {children}
+          <Footer />
+        </ThemeProvider>
         </LoadingWrapper>
       </body>
     </html>
