@@ -10,6 +10,32 @@ import {
 } from "lucide-react";
 
 
+interface SectionTitleProps {
+    icon: LucideIcon; // icon must be a LucideIcon component type
+    title: string;
+}
+
+// Define the shape of the props for the data items (optional but good practice)
+// This is not fully comprehensive but covers the necessary types for the component arguments.
+interface ExperienceData {
+    title: string;
+    company: string;
+    duration: string;
+    location: string;
+    type: string;
+    description: string;
+    points: string[];
+    imageSrc: string;
+    links: { name: string; href: string; download: boolean; icon: LucideIcon; }[];
+}
+
+interface CertificationData {
+    title: string;
+    issuer: string;
+    date: string;
+    file: string;
+}
+
 // Define color constants
 const COLOR_BG_DARK = "bg-[#121212]";
 const COLOR_TEXT_LIGHT = "text-[#eae4d5]";
