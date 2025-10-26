@@ -165,107 +165,104 @@ const Home = () => {
   ];
 
   // --- Helper Components ---
-  const SectionTitle = ({ icon: Icon, title }) => (
-    <h2
-      className={`text-4xl font-bold ${COLOR_TEXT_LIGHT} mb-4 flex items-center`}
-    >
-      <Icon className={`w-8 h-8 mr-3 text-gray-400`} />
-      {title}
-      <div className={`flex-grow border-t ml-4 ${COLOR_BORDER}`} />
-    </h2>
-  );
+const SectionTitle = ({ icon: Icon, title }: SectionTitleProps) => (
+  <h2 className={`text-4xl font-bold ${COLOR_TEXT_LIGHT} mb-4 flex items-center`}>
+    <Icon className={`w-8 h-8 mr-3 text-gray-400`} />
+    {title}
+    <div className={`flex-grow border-t ml-4 ${COLOR_BORDER}`} />
+  </h2>
+);
 
-  const ExperienceItem = ({ data }) => (
+const ExperienceItem = ({ data }: { data: ExperienceData }) => (
+  <div
+    className={`relative p-6 mb-10 border-l-4 border-gray-500 hover:border-[#eae4d5] transition-colors duration-300 rounded-tr-xl`}
+  >
     <div
-      className={`relative p-6 mb-10 border-l-4 border-gray-500 hover:border-[#eae4d5] transition-colors duration-300 rounded-tr-xl`}
-    >
-      <div
-        className={`absolute -left-2.5 top-0 w-5 h-5 ${COLOR_BG_DARK} rounded-full border-4 border-gray-500`}
-      />
+      className={`absolute -left-2.5 top-0 w-5 h-5 ${COLOR_BG_DARK} rounded-full border-4 border-gray-500`}
+    />
 
-      <h3 className={`text-2xl font-semibold ${COLOR_TEXT_LIGHT} mb-1`}>
-        {data.title}
-      </h3>
-      <p className={`text-lg italic ${COLOR_TEXT_LIGHT} opacity-80 mb-2`}>
-        {data.company} |{" "}
-        <span className={`${COLOR_ACCENT} font-light`}>
-          {data.duration} ({data.type})
-        </span>
-      </p>
+    <h3 className={`text-2xl font-semibold ${COLOR_TEXT_LIGHT} mb-1`}>
+      {data.title}
+    </h3>
+    <p className={`text-lg italic ${COLOR_TEXT_LIGHT} opacity-80 mb-2`}>
+      {data.company} |{" "}
+      <span className={`${COLOR_ACCENT} font-light`}>
+        {data.duration} ({data.type})
+      </span>
+    </p>
 
-      <p className={`${COLOR_ACCENT} mb-4`}>{data.description}</p>
+    <p className={`${COLOR_ACCENT} mb-4`}>{data.description}</p>
 
-      {/* Main Points List */}
-      <ul className={`list-none space-y-2 mb-4 pl-0`}>
-        {data.points.map((point, index) => (
-          <li key={index} className={`flex items-start ${COLOR_TEXT_LIGHT} text-sm`}>
-            <span className="mr-2 text-gray-500 mt-0.5">•</span>
-            {point}
-          </li>
-        ))}
-      </ul>
+    <ul className={`list-none space-y-2 mb-4 pl-0`}>
+      {data.points.map((point, index) => (
+        <li key={index} className={`flex items-start ${COLOR_TEXT_LIGHT} text-sm`}>
+          <span className="mr-2 text-gray-500 mt-0.5">•</span>
+          {point}
+        </li>
+      ))}
+    </ul>
 
-      {/* Actual Image Rendering */}
-      {data.imageSrc && (
-        <div className="my-4 overflow-hidden rounded-lg shadow-xl border border-gray-800">
-          <img
-            src={`/${data.imageSrc}`}
-            alt={data.company}
-            className="w-full h-60 object-cover"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-              const fallback = document.createElement("div");
-              fallback.className = `${COLOR_BG_DARK} flex items-center justify-center h-60`;
-              fallback.innerHTML = `<span class='${COLOR_ACCENT} text-sm'>Image not available: ${data.company}</span>`;
-              e.currentTarget.parentElement.appendChild(fallback);
-            }}
-          />
-        </div>
-      )}
-
-      {/* Links */}
-      <div className="flex flex-wrap gap-3 mt-5">
-        {data.links.map((link) => (
-          <a
-            key={link.name}
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            download={link.download ? link.name : undefined}
-            className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg shadow-md transition duration-200 ease-in-out bg-[#eae4d5] text-[#121212] hover:bg-gray-300"
-          >
-            <link.icon className="h-4 w-4 mr-2" />
-            {link.name}
-          </a>
-        ))}
+    {data.imageSrc && (
+      <div className="my-4 overflow-hidden rounded-lg shadow-xl border border-gray-800">
+        <img
+          src={`/${data.imageSrc}`}
+          alt={data.company}
+          className="w-full h-60 object-cover"
+          onError={(e) => {
+            e.currentTarget.style.display = "none";
+            const fallback = document.createElement("div");
+            fallback.className = `${COLOR_BG_DARK} flex items-center justify-center h-60`;
+            fallback.innerHTML = `<span class='${COLOR_ACCENT} text-sm'>Image not available: ${data.company}</span>`;
+            e.currentTarget.parentElement?.appendChild(fallback);
+          }}
+        />
       </div>
-    </div>
-  );
+    )}
 
-  const CertificationItem = ({ data }) => (
-    <div className={`p-4 ${COLOR_BORDER} border-b last:border-b-0`}>
-      <div className="flex justify-between items-start">
-        <div>
-          <h4 className={`text-xl font-semibold ${COLOR_TEXT_LIGHT}`}>
-            {data.title}
-          </h4>
-          <p className={`${COLOR_ACCENT} text-sm mt-1`}>
-            Issued by: {data.issuer} | {data.date}
-          </p>
-        </div>
+    <div className="flex flex-wrap gap-3 mt-5">
+      {data.links.map((link) => (
         <a
-          href={data.file}
+          key={link.name}
+          href={link.href}
           target="_blank"
           rel="noopener noreferrer"
-          download={data.title}
-          className="ml-4 inline-flex items-center px-3 py-1 text-sm font-medium rounded-lg transition duration-150 ease-in-out border border-gray-600 text-[#eae4d5] hover:bg-gray-800"
+          download={link.download ? link.name : undefined}
+          className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg shadow-md transition duration-200 ease-in-out bg-[#eae4d5] text-[#121212] hover:bg-gray-300"
         >
-          <Download className="h-4 w-4 mr-2" />
-          View Certificate
+          <link.icon className="h-4 w-4 mr-2" />
+          {link.name}
         </a>
-      </div>
+      ))}
     </div>
-  );
+  </div>
+);
+
+
+const CertificationItem = ({ data }: { data: CertificationData }) => (
+  <div className={`p-4 ${COLOR_BORDER} border-b last:border-b-0`}>
+    <div className="flex justify-between items-start">
+      <div>
+        <h4 className={`text-xl font-semibold ${COLOR_TEXT_LIGHT}`}>
+          {data.title}
+        </h4>
+        <p className={`${COLOR_ACCENT} text-sm mt-1`}>
+          Issued by: {data.issuer} | {data.date}
+        </p>
+      </div>
+      <a
+        href={data.file}
+        target="_blank"
+        rel="noopener noreferrer"
+        download={data.title}
+        className="ml-4 inline-flex items-center px-3 py-1 text-sm font-medium rounded-lg transition duration-150 ease-in-out border border-gray-600 text-[#eae4d5] hover:bg-gray-800"
+      >
+        <Download className="h-4 w-4 mr-2" />
+        View Certificate
+      </a>
+    </div>
+  </div>
+);
+
 
   return (
 
