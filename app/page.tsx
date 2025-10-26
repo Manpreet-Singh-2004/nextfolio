@@ -290,8 +290,9 @@ const CertificationItem = ({ data }: { data: CertificationData }) => (
                   alt="Abstract design background"
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.target.style.display = "none";
-                    e.target.parentElement.innerHTML = `<div class='w-full h-full bg-gray-800 flex items-center justify-center'><span class='${COLOR_ACCENT} text-center p-4 text-sm'>Angle Image Placeholder</span></div>`;
+                     const target = e.target as HTMLImageElement;
+                    target.style.display = "none";
+                    target.parentElement.innerHTML = `<div class='w-full h-full bg-gray-800 flex items-center justify-center'><span class='${COLOR_ACCENT} text-center p-4 text-sm'>Angle Image Placeholder</span></div>`;
                   }}
                 />
               </div>
