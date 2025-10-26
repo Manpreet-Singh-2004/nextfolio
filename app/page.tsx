@@ -11,22 +11,25 @@ import {
 
 
 interface SectionTitleProps {
-    icon: LucideIcon; // icon must be a LucideIcon component type
-    title: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; // correct type for lucide-react icons
+  title: string;
 }
 
-// Define the shape of the props for the data items (optional but good practice)
-// This is not fully comprehensive but covers the necessary types for the component arguments.
 interface ExperienceData {
-    title: string;
-    company: string;
-    duration: string;
-    location: string;
-    type: string;
-    description: string;
-    points: string[];
-    imageSrc: string;
-    links: { name: string; href: string; download: boolean; icon: LucideIcon; }[];
+  title: string;
+  company: string;
+  duration: string;
+  location: string;
+  type: string;
+  description: string;
+  points: string[];
+  imageSrc: string;
+  links: { 
+    name: string; 
+    href: string; 
+    download: boolean; 
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; 
+  }[];
 }
 
 interface CertificationData {
